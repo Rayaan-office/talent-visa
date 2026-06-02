@@ -278,10 +278,10 @@
   }
   .vf-path-card:hover { box-shadow: 0 10px 30px rgba(8,18,30,0.12); }
   .vf-path-img {
-    width: 40%; min-height: 170px; display: grid; place-items: center;
+    width: 40%; min-height: 170px; position: relative; overflow: hidden;
     background: linear-gradient(135deg, #0a2a6b 0%, #10357f 100%);
   }
-  .vf-path-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .vf-path-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .vf-path-body { width: 60%; padding: 26px; position: relative; display: flex; flex-direction: column; gap: 18px; }
   .vf-badge {
     position: absolute; top: 22px; right: 22px;
