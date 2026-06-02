@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Talent Visa — Choose your future in Australia or New Zealand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --hero-image: url('HERO-6.jpg');
+
+    --navy-900: #1b2a38;   /* top utility bar */
+    --navy-800: #233442;   /* main navigation bar */
+    --navy-700: #16293f;
+    --line: rgba(255, 255, 255, 0.10);
+
+    --violet: #009CDC;
+    --blue: #009CDC;
+    --blue-dark: #007cb0;
+    --pink: #FF4DFF;
+    --pink-dark: #d92fd9;
+    --green: #25d366;
+
+    --text-soft: #c4d0de;
+    --text-mute: #8a99ab;
+
+    --font-display: "Sora", sans-serif;
+    --font-body: "Plus Jakarta Sans", sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background: var(--navy-900);
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+  /* ---------- Top utility bar ---------- */
+  .topbar {
+    background: var(--navy-900);
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar-inner {
+    max-width: 1280px; margin: 0 auto;
+    padding: 12px 28px;
+    display: flex; align-items: center; justify-content: space-between; gap: 20px;
+  }
+  .brand { display: flex; align-items: center; }
+  .brand-logo { height: 42px; width: auto; display: block; }
+
+  .top-actions { display: flex; align-items: center; gap: 12px; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: 6px;
+    font-weight: 600; font-size: 13.5px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  }
+  .pill svg { width: 15px; height: 15px; }
+  .pill-pink {
+    background: linear-gradient(135deg, var(--pink), var(--pink-dark));
+    color: #fff; box-shadow: 0 6px 18px rgba(236, 75, 176, 0.35);
+  }
+  .pill-blue {
+    background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+    color: #fff; box-shadow: 0 6px 18px rgba(47, 134, 235, 0.35);
+  }
+  .pill:hover { transform: translateY(-2px); filter: brightness(1.06); }
+
+  /* ---------- Main nav ---------- */
+  .nav {
+    background: var(--navy-800);
+    border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; z-index: 50;
+  }
+  .nav-inner {
+    max-width: 1280px; margin: 0 auto;
+    padding: 0 28px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-links { display: flex; align-items: center; gap: 4px; }
+  .nav-links a {
+    position: relative;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 16px 14px;
+    font-size: 14px; font-weight: 500; color: var(--text-soft);
+    transition: color 0.18s ease;
+  }
+  .nav-links a svg { width: 14px; height: 14px; opacity: 0.7; }
+  .nav-links a::after {
+    content: ""; position: absolute; left: 14px; right: 14px; bottom: 10px;
+    height: 2px; border-radius: 2px; background: var(--violet);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.22s ease;
+  }
+  .nav-links a:hover { color: #fff; }
+  .nav-links a:hover::after,
+  .nav-links a.active::after { transform: scaleX(1); }
+  .nav-links a.active { color: #fff; }
+
+  .nav-search {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: grid; place-items: center;
+    border: 1px solid var(--line); color: var(--text-soft);
+    transition: background 0.18s ease, color 0.18s ease;
+  }
+  .nav-search:hover { background: rgba(255,255,255,0.06); color: #fff; }
+  .nav-search svg { width: 17px; height: 17px; }
+
+  .hamburger { display: none; color: #fff; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 560px;
+    display: grid; place-items: center;
+    text-align: center;
+    overflow: hidden;
+    padding: 80px 24px 110px;
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0;
+    background: #101a28; /* base fill behind slides while they load */
+  }
+  /* Auto-sliding background carousel */
+  .hero-slider { position: absolute; inset: 0; z-index: 0; overflow: hidden; }
+  .hero-track { display: flex; height: 100%; width: 400%; will-change: transform; }
+  .hero-slide {
+    width: 25%; height: 100%;
+    background-size: cover; background-position: center;
+  }
+  /* Faux dusk road so it reads even before you drop in the photo */
+  .hero::after {
+    content: ""; position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg, rgba(15,24,36,0.55) 0%, rgba(15,24,36,0.25) 38%, rgba(15,24,36,0.80) 100%);
+  }
+
+  .hero-content { position: relative; z-index: 3; max-width: 920px; }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(34px, 5.6vw, 60px);
+    line-height: 1.08;
+    letter-spacing: -0.5px;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.45);
+  }
+  .hero p {
+    margin: 22px auto 0;
+    max-width: 640px;
+    font-size: clamp(14px, 1.6vw, 17px);
+    line-height: 1.6;
+    color: var(--text-soft);
+    text-shadow: 0 2px 14px rgba(0,0,0,0.5);
+  }
+  .hero-cta {
+    margin-top: 30px;
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 30px; border-radius: 999px;
+    background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+    color: #fff; font-weight: 600; font-size: 15.5px;
+    box-shadow: 0 10px 30px rgba(47, 134, 235, 0.45);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .hero-cta:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(47,134,235,0.55); }
+
+  .dots { position: absolute; bottom: 34px; left: 0; right: 0; z-index: 4;
+    display: flex; justify-content: center; gap: 9px; }
+  .dots span {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.35); transition: all 0.25s ease; cursor: pointer;
+  }
+  .dots span.active { width: 22px; border-radius: 999px; background: #fff; }
+
+  /* ---------- Floating widgets ---------- */
+  .float-left { position: fixed; left: 18px; bottom: 22px; z-index: 60;
+    display: flex; flex-direction: column; gap: 12px; }
+  .float-btn {
+    width: 44px; height: 44px; border-radius: 50%;
+    display: grid; place-items: center; color: #fff;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    transition: transform 0.18s ease;
+  }
+  .float-btn:hover { transform: scale(1.08); }
+  .float-btn svg { width: 20px; height: 20px; }
+  .fb-blue { background: linear-gradient(135deg, var(--blue), var(--blue-dark)); }
+  .fb-teal { background: linear-gradient(135deg, #1fa6c9, #15829e); }
+  .whatsapp {
+    position: fixed; right: 20px; bottom: 22px; z-index: 60;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--green); color: #fff;
+    display: grid; place-items: center;
+    box-shadow: 0 8px 22px rgba(37, 211, 102, 0.5);
+    transition: transform 0.18s ease;
+  }
+  .whatsapp:hover { transform: scale(1.08); }
+  .whatsapp svg { width: 28px; height: 28px; }
+
+  /* ---------- Embedded visa-finder form ---------- */
+  :root {
+    --vf-brand: #1d5b4e;
+    --vf-brand-dark: #18493f;
+    --vf-ink: #1a2b26;
+    --vf-muted: #4a5a55;
+    --vf-line: #E2E8F0;
+  }
+  .vf-card {
+    max-width: 720px; width: 100%;
+    margin: 36px auto 0;
+    background: #fff; color: var(--vf-ink);
+    border-radius: 24px;
+    padding: 30px;
+    text-align: left;
+    box-shadow: 0 24px 60px rgba(8, 18, 30, 0.45);
+    display: flex; flex-direction: column;
+  }
+  .vf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  .vf-field { display: flex; flex-direction: column; gap: 10px; }
+  .vf-field > label { font-size: 15px; font-weight: 700; color: var(--vf-ink); }
+
+  .vf-select-wrap { position: relative; }
+  .vf-select {
+    width: 100%; height: 48px;
+    -webkit-appearance: none; appearance: none; background: #fff;
+    border: 1px solid var(--vf-line); border-radius: 999px;
+    padding: 0 46px 0 22px;
+    font-family: inherit; font-size: 15px; color: var(--vf-ink);
+    cursor: pointer; transition: border-color .18s ease, box-shadow .18s ease;
+  }
+  .vf-select:focus { outline: none; border-color: var(--vf-brand); box-shadow: 0 0 0 3px rgba(29,91,78,0.18); }
+  .vf-select-wrap svg {
+    position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+    width: 20px; height: 20px; color: var(--vf-muted); pointer-events: none;
+  }
+
+  .vf-toggles { display: flex; gap: 12px; }
+  .vf-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+  .vf-toggle {
+    border: 1px solid var(--vf-line); background: #fff; color: var(--vf-muted);
+    font-family: inherit; font-weight: 600; transition: all .16s ease;
+  }
+  .vf-toggles .vf-toggle { flex: 1; height: 48px; border-radius: 999px; font-size: 15px; }
+  .vf-chips .vf-toggle { padding: 10px 24px; border-radius: 999px; font-size: 14px; }
+  .vf-toggle:hover { border-color: #cbd5d0; background: #f8faf9; }
+  .vf-toggle.is-active {
+    background: var(--vf-brand); border-color: var(--vf-brand); color: #fff;
+    box-shadow: 0 2px 8px rgba(29,91,78,0.30);
+  }
+  .vf-toggle.is-active:hover { background: var(--vf-brand-dark); }
+
+  .vf-divider { width: 100%; height: 1px; background: var(--vf-line); }
+
+  /* progressive disclosure (height 0fr -> 1fr) */
+  .vf-step { display: grid; grid-template-rows: 0fr; opacity: 0;
+    transition: grid-template-rows .45s ease, opacity .45s ease; }
+  .vf-step > .vf-step-inner { overflow: hidden; min-height: 0; }
+  .vf-step.show { grid-template-rows: 1fr; opacity: 1; }
+
+  .vf-purpose { padding-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .vf-purpose > label { font-size: 15px; font-weight: 700; }
+  .vf-purpose .vf-divider { margin-bottom: 8px; }
+
+  .vf-pathway { padding-top: 30px; display: flex; flex-direction: column; gap: 18px; }
+  .vf-pathway h3 { text-align: center; font-family: var(--font-display); font-size: 20px; font-weight: 700; }
+  .vf-path-card {
+    border: 1px solid var(--vf-line); border-radius: 18px; overflow: hidden;
+    display: flex; background: #fff; transition: box-shadow .2s ease;
+  }
+  .vf-path-card:hover { box-shadow: 0 10px 30px rgba(8,18,30,0.12); }
+  .vf-path-img {
+    width: 40%; min-height: 170px; display: grid; place-items: center;
+    background: linear-gradient(135deg, #0a2a6b 0%, #10357f 100%);
+  }
+  .vf-path-img span { font-size: 60px; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3)); }
+  .vf-path-body { width: 60%; padding: 26px; position: relative; display: flex; flex-direction: column; gap: 18px; }
+  .vf-badge {
+    position: absolute; top: 22px; right: 22px;
+    background: var(--vf-brand); color: #fff; font-size: 12px; font-weight: 700;
+    padding: 5px 12px; border-radius: 999px;
+  }
+  .vf-path-title { font-family: var(--font-display); font-size: 24px; font-weight: 800; line-height: 1.1; }
+  .vf-path-sub { font-size: 15px; color: var(--vf-muted); margin-top: 3px; }
+  .vf-meta { display: flex; flex-wrap: wrap; gap: 22px; }
+  .vf-meta div { display: flex; align-items: center; gap: 8px; color: var(--vf-muted); font-size: 14px; }
+  .vf-meta svg { width: 20px; height: 20px; color: var(--vf-brand); }
+  .vf-continue {
+    margin-top: auto; height: 48px; width: 100%;
+    background: var(--vf-brand); color: #fff; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: inherit; font-weight: 700; font-size: 15px;
+    transition: background .18s ease;
+  }
+  .vf-continue:hover { background: var(--vf-brand-dark); }
+  .vf-continue svg { width: 20px; height: 20px; transition: transform .18s ease; }
+  .vf-continue:hover svg { transform: translateX(4px); }
+
+  @media (max-width: 620px) {
+    .vf-row { grid-template-columns: 1fr; }
+    .vf-path-card { flex-direction: column; }
+    .vf-path-img, .vf-path-body { width: 100%; }
+  }
+
+  /* ---------- Entrance animation ---------- */
+  .reveal { opacity: 0; transform: translateY(20px); animation: rise 0.7s cubic-bezier(.2,.7,.2,1) forwards; }
+  .d1 { animation-delay: 0.08s; } .d2 { animation-delay: 0.2s; }
+  .d3 { animation-delay: 0.34s; } .d4 { animation-delay: 0.48s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 900px) {
+    .nav-links, .brand-tag { display: none; }
+    .hamburger { display: grid; place-items: center; padding: 16px 0; }
+    .top-actions .pill span { display: none; }
+    .top-actions .pill { padding: 10px 14px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Top utility bar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#">
+        <img class="brand-logo" src="logo.svg" alt="Talent Visa" />
+      </a>
+
+      <div class="top-actions">
+        <a class="pill pill-pink" href="#">
+          <span>Book a Consultation</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+        </a>
+        <a class="pill pill-blue" href="#"><span>Free Visa Check</span></a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-links">
+        <a class="active" href="#">Home</a>
+        <a href="#">Our Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></a>
+        <a href="#">Our Visas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></a>
+        <a href="#">Our Countries <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></a>
+        <a href="#">Your Immigration Plan</a>
+        <a href="#">Let's Talk <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></a>
+        <a href="#">About Us <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></a>
+      </div>
+      <button class="hamburger" aria-label="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      </button>
+      <button class="nav-search" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-slider">
+      <div class="hero-track" id="heroTrack">
+        <div class="hero-slide" style="background-image:url('HERO-6.jpg')"></div>
+        <div class="hero-slide" style="background-image:url('HERO-2.jpg')"></div>
+        <div class="hero-slide" style="background-image:url('HERO-3.jpg')"></div>
+        <div class="hero-slide" style="background-image:url('HERO-6.jpg')"></div>
+      </div>
+    </div>
+    <div class="hero-content">
+      <h1 class="reveal d1">Choose your future in Australia<br/>or New Zealand</h1>
+      <p class="reveal d2">MARA registered (Australia) and IAA licensed (New Zealand) Professional immigration guidance with transparency at every step.</p>
+
+      <!-- Embedded visa-finder form -->
+      <div class="vf-card reveal d3">
+        <div class="vf-row">
+          <div class="vf-field">
+            <label>I am a citizen of:</label>
+            <div class="vf-select-wrap">
+              <select id="citizen" class="vf-select">
+                <option value="" disabled selected hidden>Select country…</option>
+                <option value="albania">Albania</option>
+                <option value="india">India</option>
+                <option value="philippines">Philippines</option>
+                <option value="usa">United States</option>
+                <option value="uk">United Kingdom</option>
+                <option value="south-africa">South Africa</option>
+              </select>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+
+          <div class="vf-field">
+            <label>I want to go to:</label>
+            <div class="vf-toggles" data-toggle-group="destination">
+              <button class="vf-toggle" data-value="australia">Australia</button>
+              <button class="vf-toggle" data-value="new-zealand">New Zealand</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="vf-step" id="step2">
+          <div class="vf-step-inner">
+            <div class="vf-purpose">
+              <div class="vf-divider"></div>
+              <label>Choose your trip purpose:</label>
+              <div class="vf-chips" data-toggle-group="purpose">
+                <button class="vf-toggle" data-value="visitor">Visitor</button>
+                <button class="vf-toggle" data-value="work">Work</button>
+                <button class="vf-toggle" data-value="study">Study</button>
+                <button class="vf-toggle" data-value="resident">Resident</button>
+                <button class="vf-toggle" data-value="partner">Partner</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="vf-step" id="step3">
+          <div class="vf-step-inner">
+            <div class="vf-pathway">
+              <div class="vf-divider"></div>
+              <h3>Your Recommended Visa Pathway</h3>
+              <div class="vf-path-card">
+                <div class="vf-path-img"><span>🇦🇺</span></div>
+                <div class="vf-path-body">
+                  <span class="vf-badge">Recommended</span>
+                  <div>
+                    <div class="vf-path-title">Student Visa 500</div>
+                    <div class="vf-path-sub">Australia</div>
+                  </div>
+                  <div class="vf-meta">
+                    <div>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+                      <span>4–8 weeks</span>
+                    </div>
+                    <div>
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2.5" x2="8" y2="6"/><line x1="16" y1="2.5" x2="16" y2="6"/></svg>
+                      <span>Duration of study</span>
+                    </div>
+                  </div>
+                  <button class="vf-continue">
+                    Continue
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating widgets -->
+  <div class="float-left">
+    <a class="float-btn fb-blue" href="#" aria-label="Contact">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16.5v2.6a2 2 0 0 1-2.2 2 19 19 0 0 1-8.3-3 18.7 18.7 0 0 1-5.7-5.7A19 19 0 0 1 1.9 4.1 2 2 0 0 1 3.9 2h2.6a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L7.5 9.6a15 15 0 0 0 5.7 5.7l1.2-1.1a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6a2 2 0 0 1 1.7 2Z"/></svg>
+    </a>
+    <a class="float-btn fb-teal" href="#" aria-label="History">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><polyline points="3 3 3 8 8 8"/><polyline points="12 7 12 12 15.5 14"/></svg>
+    </a>
+  </div>
+  <a class="whatsapp" href="#" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.9 4.43-9.9 9.9 0 1.74.46 3.45 1.32 4.95L2 22l5.3-1.38a9.9 9.9 0 0 0 4.73 1.2h.01c5.46 0 9.9-4.43 9.9-9.9a9.85 9.85 0 0 0-2.9-7A9.84 9.84 0 0 0 12.04 2Zm0 18.06h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.1.81.83-3.02-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.23 8.24-8.23a8.2 8.2 0 0 1 5.82 2.42 8.18 8.18 0 0 1 2.41 5.82c0 4.54-3.69 8.23-8.23 8.23Zm4.52-6.16c-.25-.13-1.47-.72-1.69-.8-.23-.09-.39-.13-.56.12-.16.25-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.51.11-.11.25-.29.37-.43.13-.14.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.48c-.17 0-.43.06-.66.31-.23.25-.86.85-.86 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28Z"/></svg>
+  </a>
+
+  <script>
+    // Auto-sliding hero background (seamless loop)
+    (function () {
+      const track = document.getElementById('heroTrack');
+      const real = 3;          // HERO-6, HERO-2, HERO-3
+      const step = 100 / 4;    // 4 slides in track (3 + 1 clone)
+      let idx = 0;
+      function advance() {
+        idx++;
+        track.style.transition = 'transform 0.9s cubic-bezier(.65,.05,.36,1)';
+        track.style.transform = `translateX(-${idx * step}%)`;
+      }
+      track.addEventListener('transitionend', () => {
+        if (idx >= real) {                 // landed on the clone of slide 0
+          track.style.transition = 'none';
+          idx = 0;
+          track.style.transform = 'translateX(0)';
+        }
+      });
+      setInterval(advance, 5000);
+    })();
+
+    // Progressive visa-finder form
+    const state = { citizen: false, destination: null, purpose: null };
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+
+    function show(el) {
+      if (el.classList.contains('show')) return;
+      el.classList.add('show');
+      setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 250);
+    }
+
+    document.getElementById('citizen').addEventListener('change', (e) => {
+      state.citizen = !!e.target.value;
+      if (state.citizen && state.destination) show(step2);
+    });
+
+    document.querySelectorAll('[data-toggle-group]').forEach((group) => {
+      const key = group.dataset.toggleGroup;
+      group.addEventListener('click', (e) => {
+        const btn = e.target.closest('.vf-toggle');
+        if (!btn) return;
+        group.querySelectorAll('.vf-toggle').forEach((b) => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        state[key] = btn.dataset.value;
+        if (key === 'destination' && state.citizen) show(step2);
+        if (key === 'purpose') show(step3);
+      });
+    });
+  </script>
+</body>
+</html>

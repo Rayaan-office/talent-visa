@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Talent Visa — Visa Finder</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          "brand": "#1d5b4e",
+          "brand-dark": "#18493f",
+          "ink": "#1a2b26",
+          "muted": "#4a5a55",
+          "border-subtle": "#E2E8F0",
+        },
+        fontFamily: { sans: ["Nunito Sans", "sans-serif"] },
+        borderRadius: { "2xl": "1.25rem", "3xl": "1.75rem" },
+      },
+    },
+  };
+</script>
+<style>
+  body { font-family: "Nunito Sans", sans-serif; }
+  .hero-bg {
+    background:
+      radial-gradient(120% 90% at 15% 10%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 45%),
+      radial-gradient(100% 80% at 85% 100%, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 50%),
+      linear-gradient(160deg, #2c6f5f 0%, #1f574b 45%, #163f39 100%);
+  }
+  .soft-shadow { box-shadow: 0 24px 60px rgba(16, 48, 42, 0.28); }
+  .card-shadow { box-shadow: 0 4px 20px rgba(36, 52, 66, 0.08); }
+
+  /* Progressive reveal: animates height (0fr -> 1fr) + opacity without knowing content height */
+  .reveal { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows .45s ease, opacity .45s ease; }
+  .reveal > .reveal-inner { overflow: hidden; min-height: 0; }
+  .reveal.show { grid-template-rows: 1fr; opacity: 1; }
+
+  /* Toggle button states */
+  .toggle { border: 1px solid #E2E8F0; background: #fff; color: #4a5a55; }
+  .toggle:hover { border-color: #cbd5d0; background: #f8faf9; }
+  .toggle.is-active { background: #1d5b4e; border-color: #1d5b4e; color: #fff; box-shadow: 0 2px 8px rgba(29,91,78,0.30); }
+  .toggle.is-active:hover { background: #18493f; }
+</style>
+</head>
+<body class="hero-bg min-h-screen flex items-center justify-center p-4 md:p-8 text-ink antialiased">
+
+  <!-- Visa Finder Card -->
+  <main class="w-full max-w-[760px] bg-white rounded-3xl soft-shadow p-6 md:p-10 flex flex-col">
+
+    <!-- STEP 1 — always visible -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-7">
+      <!-- Citizen of -->
+      <div class="flex flex-col gap-2.5">
+        <label class="text-[15px] font-bold text-center md:text-left">I am a citizen of:</label>
+        <div class="relative">
+          <select id="citizen" class="w-full h-12 appearance-none bg-none bg-white border border-border-subtle text-ink text-[15px] rounded-full pl-6 pr-12 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition-all cursor-pointer">
+            <option value="" disabled selected hidden>Select country…</option>
+            <option value="albania">Albania</option>
+            <option value="india">India</option>
+            <option value="philippines">Philippines</option>
+            <option value="usa">United States</option>
+            <option value="uk">United Kingdom</option>
+            <option value="south-africa">South Africa</option>
+          </select>
+          <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-muted">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </span>
+        </div>
+      </div>
+
+      <!-- Destination -->
+      <div class="flex flex-col gap-2.5">
+        <label class="text-[15px] font-bold text-center md:text-left">I want to go to:</label>
+        <div class="flex gap-3" data-toggle-group="destination">
+          <button data-value="australia" class="toggle flex-1 h-12 rounded-full text-[15px] font-semibold transition-all">Australia</button>
+          <button data-value="new-zealand" class="toggle flex-1 h-12 rounded-full text-[15px] font-semibold transition-all">New Zealand</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 — revealed once step 1 is complete -->
+    <div class="reveal" id="step2">
+      <div class="reveal-inner">
+        <div class="pt-8 flex flex-col gap-4 items-center">
+          <div class="w-full h-px bg-border-subtle mb-4"></div>
+          <label class="text-[15px] font-bold">Choose your trip purpose:</label>
+          <div class="flex flex-wrap justify-center gap-3" data-toggle-group="purpose">
+            <button data-value="visitor" class="toggle px-6 py-2.5 rounded-full text-[14px] font-semibold transition-all">Visitor</button>
+            <button data-value="work" class="toggle px-6 py-2.5 rounded-full text-[14px] font-semibold transition-all">Work</button>
+            <button data-value="study" class="toggle px-6 py-2.5 rounded-full text-[14px] font-semibold transition-all">Study</button>
+            <button data-value="resident" class="toggle px-6 py-2.5 rounded-full text-[14px] font-semibold transition-all">Resident</button>
+            <button data-value="partner" class="toggle px-6 py-2.5 rounded-full text-[14px] font-semibold transition-all">Partner</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 — revealed once step 2 is complete -->
+    <div class="reveal" id="step3">
+      <div class="reveal-inner">
+        <div class="pt-8 flex flex-col gap-5">
+          <div class="w-full h-px bg-border-subtle"></div>
+          <h2 class="text-xl font-bold text-center">Your Recommended Visa Pathway</h2>
+          <div class="border border-border-subtle rounded-2xl overflow-hidden flex flex-col md:flex-row bg-white card-shadow transition-shadow hover:shadow-lg group">
+            <div class="md:w-2/5 h-44 md:h-auto relative overflow-hidden flex items-center justify-center"
+                 style="background: linear-gradient(135deg,#0a2a6b 0%,#10357f 100%);">
+              <span class="text-6xl drop-shadow-lg select-none group-hover:scale-105 transition-transform duration-500" data-visa-flag>🇦🇺</span>
+            </div>
+            <div class="md:w-3/5 p-6 md:p-7 flex flex-col gap-5 relative">
+              <span class="absolute top-6 right-6 bg-brand text-white text-[12px] font-bold px-3 py-1 rounded-full">Recommended</span>
+              <div class="flex flex-col gap-0.5 pr-28">
+                <h3 class="text-2xl font-extrabold leading-tight" data-visa-title>Student Visa 500</h3>
+                <p class="text-[15px] text-muted" data-visa-country>Australia</p>
+              </div>
+              <div class="flex flex-wrap gap-6 mt-1">
+                <div class="flex items-center gap-2 text-muted">
+                  <svg class="text-brand" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/></svg>
+                  <span class="text-[14px]" data-visa-time>4–8 weeks</span>
+                </div>
+                <div class="flex items-center gap-2 text-muted">
+                  <svg class="text-brand" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="16.5" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2.5" x2="8" y2="6"/><line x1="16" y1="2.5" x2="16" y2="6"/></svg>
+                  <span class="text-[14px]" data-visa-note>Duration of study</span>
+                </div>
+              </div>
+              <button class="mt-auto h-12 w-full bg-brand text-white rounded-xl flex items-center justify-center gap-2 font-bold hover:bg-brand-dark transition-colors group/btn">
+                Continue
+                <svg class="group-hover/btn:translate-x-1 transition-transform" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="12" x2="19" y2="12"/><polyline points="13 6 19 12 13 18"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const state = { citizen: false, destination: null, purpose: null };
+
+    const step2 = document.getElementById("step2");
+    const step3 = document.getElementById("step3");
+
+    function show(el) {
+      if (el.classList.contains("show")) return;
+      el.classList.add("show");
+      // Smoothly bring the newly revealed section into view
+      setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "nearest" }), 250);
+    }
+
+    // Citizen select
+    document.getElementById("citizen").addEventListener("change", (e) => {
+      state.citizen = !!e.target.value;
+      if (state.citizen && state.destination) show(step2);
+    });
+
+    // Toggle groups (single-select)
+    document.querySelectorAll("[data-toggle-group]").forEach((group) => {
+      const key = group.dataset.toggleGroup;
+      group.addEventListener("click", (e) => {
+        const btn = e.target.closest(".toggle");
+        if (!btn) return;
+        group.querySelectorAll(".toggle").forEach((b) => b.classList.remove("is-active"));
+        btn.classList.add("is-active");
+        state[key] = btn.dataset.value;
+
+        if (key === "destination" && state.citizen) show(step2);
+        if (key === "purpose") show(step3);
+      });
+    });
+  </script>
+</body>
+</html>

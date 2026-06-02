@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Immigrator - Visa Finder</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "border-subtle": "#E2E8F0",
+                        "on-tertiary-container": "#5d0021",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#87ceff",
+                        "slate-deep": "#243442",
+                        "on-tertiary-fixed-variant": "#900038",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#ff537f",
+                        "action-blue": "#019CDC",
+                        "on-secondary-fixed": "#0c1d2a",
+                        "on-secondary-container": "#566676",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-surface-variant": "#3e4850",
+                        "tertiary": "#bc004b",
+                        "surface-tint": "#006590",
+                        "surface-gray": "#F8FAFB",
+                        "on-surface": "#1a1c1c",
+                        "accent-pink": "#E91E63",
+                        "outline": "#6e7881",
+                        "on-tertiary-fixed": "#400014",
+                        "error-container": "#ffdad6",
+                        "surface-container-high": "#e8e8e8",
+                        "tertiary-fixed-dim": "#ffb2be",
+                        "secondary-fixed-dim": "#b7c8da",
+                        "inverse-primary": "#87ceff",
+                        "primary-fixed": "#c8e6ff",
+                        "tertiary-fixed": "#ffd9de",
+                        "surface-container-low": "#f3f3f4",
+                        "on-background": "#1a1c1c",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#e2e2e2",
+                        "inverse-on-surface": "#f0f1f1",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#bec8d1",
+                        "surface-dim": "#dadada",
+                        "secondary-fixed": "#d3e4f7",
+                        "background": "#f9f9f9",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#004c6d",
+                        "secondary-container": "#d3e4f7",
+                        "surface-bright": "#f9f9f9",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#384857",
+                        "surface": "#f9f9f9",
+                        "on-primary-container": "#002f46",
+                        "primary": "#006590",
+                        "surface-container": "#eeeeee",
+                        "secondary": "#506070",
+                        "on-primary-fixed": "#001e2e",
+                        "inverse-surface": "#2f3131",
+                        "primary-container": "#019cdc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-desktop": "40px",
+                        "gutter": "24px",
+                        "max-width": "1200px",
+                        "margin-mobile": "16px",
+                        "unit": "4px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Nunito Sans"],
+                        "label-md": ["Nunito Sans"],
+                        "label-lg": ["Nunito Sans"],
+                        "headline-lg-mobile": ["Nunito Sans"],
+                        "body-lg": ["Nunito Sans"],
+                        "body-sm": ["Nunito Sans"],
+                        "body-md": ["Nunito Sans"],
+                        "headline-sm": ["Nunito Sans"],
+                        "headline-md": ["Nunito Sans"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                        "label-lg": ["14px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["26px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: #f9f9f9;
+        }
+        .soft-shadow {
+            box-shadow: 0px 4px 20px rgba(36, 52, 66, 0.08);
+        }
+        .hero-overlay {
+            background: linear-gradient(180deg, rgba(36, 52, 66, 0.7) 0%, rgba(0, 101, 144, 0.8) 100%);
+        }
+    </style>
+</head>
+<body class="text-on-surface antialiased flex flex-col min-h-screen">
+<!-- TopNavBar -->
+<header class="bg-surface dark:bg-surface-dim border-b border-border-subtle dark:border-outline-variant w-full sticky top-0 z-50">
+<div class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop py-4 max-w-max-width mx-auto">
+<div class="flex items-center gap-2 text-primary dark:text-primary-fixed-dim hover:text-action-blue dark:hover:text-primary-fixed transition-colors duration-200 cursor-pointer">
+<span class="material-symbols-outlined text-3xl" style="font-variation-settings: 'FILL' 1;">flight_takeoff</span>
+<span class="text-headline-md font-headline-md font-extrabold">Immigrator</span>
+</div>
+<nav class="hidden md:flex items-center gap-2">
+<a class="text-primary dark:text-primary-fixed-dim border-2 border-primary dark:border-primary-fixed-dim rounded-full px-4 py-1 text-label-lg font-label-lg opacity-80 scale-95 transition-all" href="#">Home</a>
+<a class="text-on-surface-variant dark:text-surface-variant px-4 py-1 text-label-lg font-label-lg hover:text-action-blue dark:hover:text-primary-fixed transition-colors duration-200" href="#">About Immigrator</a>
+<a class="text-on-surface-variant dark:text-surface-variant px-4 py-1 text-label-lg font-label-lg hover:text-action-blue dark:hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1" href="#">Our Countries <span class="material-symbols-outlined text-sm">expand_more</span></a>
+<a class="text-on-surface-variant dark:text-surface-variant px-4 py-1 text-label-lg font-label-lg hover:text-action-blue dark:hover:text-primary-fixed transition-colors duration-200" href="#">Blog</a>
+<a class="text-on-surface-variant dark:text-surface-variant px-4 py-1 text-label-lg font-label-lg hover:text-action-blue dark:hover:text-primary-fixed transition-colors duration-200" href="#">Contact</a>
+</nav>
+<div class="flex items-center">
+<button class="bg-primary text-on-primary px-6 py-2 rounded-full text-label-lg font-label-lg hover:bg-action-blue transition-colors duration-200 shadow-sm flex items-center gap-2">
+                    Login
+                </button>
+<button class="md:hidden ml-4 text-on-surface">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow relative">
+<!-- Hero Background -->
+<div class="absolute inset-0 z-0 h-[800px] overflow-hidden">
+<img alt="A professional blurred background of an airport terminal or modern city skyline, conveying a sense of travel and progress." class="w-full h-full object-cover blur-sm scale-105" data-alt="A softly blurred, high-quality photograph of a modern airport terminal interior. The lighting is cool and professional, with a blue-green color grade that matches the institutional aesthetic. Faint silhouettes of travelers can be seen in the distance, conveying a subtle sense of global movement and structured facilitation." src="https://lh3.googleusercontent.com/aida/AP1WRLttHBnrWSXFuEOtm-qhkGx6IZLuil8SwWKouWQvC6cyETBFLc_7yIMBqESwyra6edEv5pNSEMJUW1jkAnXMhCN39nzpkRc5ZSR_NMMz0SpmmVv37JXeckPRYhPnQhIeUuMvsjb4rDxwcDH3JlAZz5-slZ9HdMAFm0Go8FMaRbVg8wXRbWtCMudjkLkgTHJGNI83Zs9S3KdNptHd7PNWl89jtRUIWqvW2QuKAypKXrC3DCTm3-gnezZsirQ"/>
+<div class="absolute inset-0 hero-overlay"></div>
+</div>
+<!-- Content Container -->
+<div class="relative z-10 max-w-[900px] mx-auto px-margin-mobile md:px-margin-desktop py-12 md:py-24">
+<!-- White Card Container -->
+<div class="bg-surface-container-lowest rounded-xl soft-shadow p-6 md:p-10 flex flex-col gap-10">
+<!-- Inquiry Form Section -->
+<div class="flex flex-col gap-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Citizen Of -->
+<div class="flex flex-col gap-3">
+<label class="text-body-lg font-body-lg font-semibold text-center md:text-left text-on-surface">I am a citizen of:</label>
+<div class="relative">
+<select class="w-full h-12 appearance-none bg-surface-container-lowest border border-border-subtle text-on-surface text-body-md font-body-md rounded-full px-6 py-2 focus:outline-none focus:border-action-blue focus:ring-2 focus:ring-action-blue/20 transition-all cursor-pointer">
+<option selected="" value="albania">Albania</option>
+<option value="usa">United States</option>
+<option value="uk">United Kingdom</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-on-surface-variant">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Go To -->
+<div class="flex flex-col gap-3">
+<label class="text-body-lg font-body-lg font-semibold text-center md:text-left text-on-surface">I want to go to:</label>
+<div class="flex gap-4">
+<button class="flex-1 h-12 rounded-full bg-slate-deep text-on-primary text-body-md font-body-md font-semibold transition-all hover:-translate-y-0.5 shadow-sm">
+                                    Australia
+                                </button>
+<button class="flex-1 h-12 rounded-full bg-surface-container-lowest border border-border-subtle text-on-surface-variant text-body-md font-body-md hover:border-outline transition-all hover:bg-surface-gray">
+                                    New Zealand
+                                </button>
+</div>
+</div>
+</div>
+<!-- Trip Purpose -->
+<div class="flex flex-col gap-4 items-center">
+<label class="text-body-lg font-body-lg font-semibold text-on-surface">Choose your trip purpose:</label>
+<div class="flex flex-wrap justify-center gap-3">
+<button class="px-6 py-2 rounded-full border border-border-subtle text-on-surface-variant text-body-sm font-body-sm hover:border-outline transition-all bg-surface-container-lowest">Visitor</button>
+<button class="px-6 py-2 rounded-full border border-border-subtle text-on-surface-variant text-body-sm font-body-sm hover:border-outline transition-all bg-surface-container-lowest">Work</button>
+<button class="px-6 py-2 rounded-full bg-slate-deep text-on-primary text-body-sm font-body-sm shadow-sm transition-transform hover:-translate-y-0.5">Study</button>
+<button class="px-6 py-2 rounded-full border border-border-subtle text-on-surface-variant text-body-sm font-body-sm hover:border-outline transition-all bg-surface-container-lowest">Resident</button>
+<button class="px-6 py-2 rounded-full border border-border-subtle text-on-surface-variant text-body-sm font-body-sm hover:border-outline transition-all bg-surface-container-lowest">Partner</button>
+</div>
+</div>
+</div>
+<div class="w-full h-px bg-border-subtle"></div>
+<!-- Recommended Pathway Section -->
+<div class="flex flex-col gap-6">
+<h2 class="text-headline-sm font-headline-sm text-center text-on-surface">Your Recommended Visa Pathway</h2>
+<div class="border border-border-subtle rounded-xl overflow-hidden flex flex-col md:flex-row bg-surface-container-lowest transition-all hover:shadow-md relative group">
+<!-- Image Left -->
+<div class="md:w-2/5 h-48 md:h-auto relative overflow-hidden">
+<img alt="Australian flag or landmark indicating the destination." class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A vibrant, high-quality image of the Australian flag waving against a clear blue sky. The composition is clean and professional, focusing on the symbolic destination. The bright blue and red colors of the flag contrast pleasantly with the clean institutional aesthetic of the UI." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfabUSUy0xAzxRNh9aAqCBJDJVidYCMdkmjWLIjXvksfLAsscsywSHJpT_hbTo371EdtMUpds5Ed1U1dEuzrK3tv4rgEnSBje7pWkgpw6HqZ0cZD4E1_J2CH1ObZZncc4MRYV_XGZQm_SLNmYTppJ936sOdnWfosoBUneUzOfSEmbyyv5mPWMNSgYFZQ75UvlPGmCq_uooo-GvUyCExImF_VpHhSCWEMVngpVwUeDjyTRoecbSYscbMpBOrdwN20KImP44iQ5E-ss"/>
+</div>
+<!-- Content Right -->
+<div class="md:w-3/5 p-6 md:p-8 flex flex-col gap-6 relative bg-surface-container-lowest">
+<!-- Badge -->
+<div class="absolute top-6 right-6">
+<span class="bg-slate-deep text-on-primary text-label-md font-label-md px-3 py-1 rounded-full opacity-90">Recommended</span>
+</div>
+<div class="flex flex-col gap-1 pr-24">
+<h3 class="text-headline-md font-headline-md text-on-surface">Student Visa 500</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">Australia</p>
+</div>
+<div class="flex flex-wrap gap-6 mt-2">
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-slate-deep opacity-70">schedule</span>
+<span class="text-body-sm font-body-sm">4-8 weeks</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant">
+<span class="material-symbols-outlined text-slate-deep opacity-70">calendar_today</span>
+<span class="text-body-sm font-body-sm">Duration of study</span>
+</div>
+</div>
+<button class="mt-auto h-12 w-full bg-slate-deep text-on-primary rounded-lg flex items-center justify-center gap-2 hover:bg-slate-800 transition-colors shadow-sm group/btn">
+<span class="text-label-lg font-label-lg">Continue</span>
+<span class="material-symbols-outlined text-xl group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="bg-slate-deep dark:bg-black w-full py-8 px-margin-mobile md:px-margin-desktop flex flex-col md:flex-row justify-between items-center z-10 mt-auto">
+<div class="flex items-center gap-2 text-on-primary mb-4 md:mb-0">
+<span class="text-headline-sm font-headline-sm font-bold">Immigrator</span>
+</div>
+<div class="text-body-sm font-body-sm text-surface-container-lowest opacity-80 mb-4 md:mb-0 text-center md:text-left">
+            © 2024 Immigrator. Travel. Work. Live.
+        </div>
+<nav class="flex flex-wrap justify-center md:justify-end gap-6">
+<a class="text-surface-variant opacity-80 text-label-md font-label-md hover:text-primary-fixed-dim underline transition-all" href="#">Privacy Policy</a>
+<a class="text-surface-variant opacity-80 text-label-md font-label-md hover:text-primary-fixed-dim underline transition-all" href="#">Terms of Service</a>
+<a class="text-surface-variant opacity-80 text-label-md font-label-md hover:text-primary-fixed-dim underline transition-all" href="#">FAQ</a>
+<a class="text-surface-variant opacity-80 text-label-md font-label-md hover:text-primary-fixed-dim underline transition-all" href="#">Sitemap</a>
+</nav>
+</footer>
+</body></html>
